@@ -15,8 +15,8 @@ const Dashboard=({user,setUser})=>{
     <>
     <h3> Welcome {user.name} </h3>
     <h3> Your Balance:{user.bal_amount} </h3>
-    <AddAmount />
-    <RemoveAmount/>
+    <AddAmount user={user} setUser={setUser} />
+    <RemoveAmount user={user} setUser={setUser}/>
     </>
     
     )

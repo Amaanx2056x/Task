@@ -1,4 +1,4 @@
-import React,{useState} from 'react'
+import React,{useState,useEffect} from 'react'
 import { useHistory } from "react-router-dom";
 import axios from 'axios'
 const Login=({user,setUser})=>{
@@ -40,7 +40,7 @@ const Login=({user,setUser})=>{
   if(res.data.msg){
     alert(res.data.msg)
   }
-  setUser({name: res.data.name, bal_amount: res.data.bal_amount})
+  setUser({name: res.data.name, bal_amount: res.data.bal_amount, email: res.data.email})
 
 
       }

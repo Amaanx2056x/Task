@@ -15,7 +15,8 @@ import Dashboard from './components/Dashboard'
 function App() {
   const [user, setUser] = useState({
     name:null,
-    bal_amount: 0
+    bal_amount: 0,
+    email: null
 })
   return (
     <div className="App">

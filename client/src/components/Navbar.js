@@ -12,7 +12,7 @@ const Navbar=({user,setUser})=>{
     {user.name !== null ? 
       <>
        <li className="nav-item">
-        <Link className="nav-link" onClick={
+        <a className="nav-link" onClick={
           ()=>{
             setUser({
               name:null,
@@ -20,7 +20,7 @@ const Navbar=({user,setUser})=>{
             })
           }
           
-        }>Logout</Link>
+        }>Logout</a>
       </li>
       </>
       :
