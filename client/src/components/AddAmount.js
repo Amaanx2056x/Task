@@ -1,6 +1,8 @@
-import React,{useState} from 'react'
+import React,{useState,useContext} from 'react'
 import axios from 'axios'
-const AddAmount=({user, setUser})=>{
+import {UserContext} from '../App'
+const AddAmount=()=>{
+  const [user,setUser] =useContext(UserContext)
   const [formData, setData]=useState({
     addamount: 0
   })
@@ -12,10 +14,8 @@ const {addamount} = formData
   
     const submitHandler = async (e)=>{
     e.preventDefault()
-    if(addamount<=0){
-      alert("Negative values are not allowed")
-    }
-    else{
+
+    
       try{
           const config = {
     headers: {
@@ -29,10 +29,9 @@ const {addamount} = formData
   })
   
   let res = await axios.put('/transaction/addAmount', body, config)
-  if(res.data.msg){
-    alert(res.data.msg)
+  if(res.data.error){
+    return alert(res.data.error)
   }
-  console.log(res.data)
   setUser({...user,bal_amount: res.data})
   setData({addamount: 0})
 
@@ -41,7 +40,7 @@ const {addamount} = formData
         alert("server error")
       }
     }
-  }
+  
   return (
     <>
     <h3>Add Amount</h3>

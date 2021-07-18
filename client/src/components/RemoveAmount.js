@@ -1,6 +1,8 @@
-import React,{useState} from 'react'
+import React,{useState,useContext} from 'react'
 import axios from 'axios'
-const RemoveAmount=({user, setUser})=>{
+import {UserContext} from '../App'
+const RemoveAmount=()=>{
+  const [user,setUser] =useContext(UserContext)
   const [formData, setData]=useState({
     removeamount: 0
   })
@@ -12,10 +14,8 @@ const {removeamount} = formData
   
     const submitHandler = async (e)=>{
     e.preventDefault()
-    if(removeamount<=0){
-      alert("Negative values are not allowed")
-    }
-    else{
+
+   
       try{
           const config = {
     headers: {
@@ -29,10 +29,10 @@ const {removeamount} = formData
   })
   
   let res = await axios.put('/transaction/removeAmount', body, config)
-  if(res.data.msg){
-    alert(res.data.msg)
+  if(res.data.error){
+    return alert(res.data.error)
   }
-  console.log(res.data)
+ 
   setUser({...user,bal_amount: res.data})
   setData({removeamount: 0})
 
@@ -41,7 +41,7 @@ const {removeamount} = formData
         alert("server error")
       }
     }
-  }
+  
   return (
     <>
     <h3>Remove Amount</h3>

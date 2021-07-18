@@ -1,5 +1,5 @@
 import './App.css';
-import React,{useState} from 'react'
+import React,{useState,createContext} from 'react'
 import {
   BrowserRouter as Router,
   Route,
@@ -11,7 +11,7 @@ import Register from './components/Register'
 import Login from './components/Login'
 import Dashboard from './components/Dashboard'
 
-
+const UserContext= createContext()
 function App() {
   const [user, setUser] = useState({
     name:null,
@@ -19,25 +19,28 @@ function App() {
     email: null
 })
   return (
+    <UserContext.Provider value={[user,setUser]}>
     <div className="App">
     <Router>
     
-    <Navbar user={user} setUser={setUser} />
+    <Navbar />
     <Switch>
        <Route exact path="/">
-       <Dashboard user={user} setUser={setUser}/>
+       <Dashboard />
        </Route>
     <Route exact path="/register">
-    <Register user={user} setUser={setUser} />
+    <Register />
     </Route>
     <Route exact path="/login">
-    <Login user={user} setUser={setUser} />
+    <Login />
     </Route>
   
     </Switch>
     </Router>
     </div>
+    </UserContext.Provider>
   );
 }
 
 export default App;
+export {UserContext}

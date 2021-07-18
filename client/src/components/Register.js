@@ -1,7 +1,9 @@
-import React,{useState,useEffect} from 'react'
+import React,{useState,useEffect,useContext} from 'react'
 import { useHistory } from "react-router-dom";
 import axios from 'axios'
-const Register=({user, setUser})=>{
+import {UserContext} from '../App'
+const Register=()=>{
+  const [user] =useContext(UserContext)
   const [formData, setData]=useState({
     name:'',
     email: '',
@@ -22,10 +24,8 @@ const Register=({user, setUser})=>{
   }
   const submitHandler = async (e)=>{
     e.preventDefault()
-    if(name.length < 3 || password.length <6){
-      alert("Name should be 3+ characters and Password should be 6+ characters long")
-    }
-    else{
+
+    
       try{
           const config = {
     headers: {
@@ -36,13 +36,20 @@ const Register=({user, setUser})=>{
     name, email, password
   })
   let res = await axios.post('/auth/register', body, config)
-  alert(res.data.msg)
+  if(res.data.error){
+    return alert(res.data.error)
+  }
+  else{
+    alert(res.data.success)
+    history.push('/login')
+  }
+  
       }
       catch(err){
         alert("server error")
       }
     }
-  }
+  
   return (
     <>
     <form onSubmit={submitHandler}>

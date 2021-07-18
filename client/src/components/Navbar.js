@@ -1,6 +1,8 @@
-import React from 'react'
+import React,{useContext} from 'react'
 import {Link} from 'react-router-dom'
-const Navbar=({user,setUser})=>{
+import {UserContext} from '../App'
+const Navbar=()=>{
+  const [user,setUser] =useContext(UserContext)
   return (
     <>
     <nav className="navbar navbar-expand navbar-dark bg-dark">

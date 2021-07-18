@@ -1,7 +1,9 @@
-import React,{useState,useEffect} from 'react'
+import React,{useState,useEffect,useContext} from 'react'
 import { useHistory } from "react-router-dom";
 import axios from 'axios'
-const Login=({user,setUser})=>{
+import {UserContext} from '../App'
+const Login=()=>{
+  const [user,setUser] =useContext(UserContext)
   const [formData, setData]=useState({
     email: '',
     password: ''
@@ -23,10 +25,8 @@ const Login=({user,setUser})=>{
  
   const submitHandler = async (e)=>{
     e.preventDefault()
-    if(password.length <6){
-      alert("Password should be 6+ characters long")
-    }
-    else{
+
+   
       try{
           const config = {
     headers: {
@@ -37,8 +37,8 @@ const Login=({user,setUser})=>{
     email, password
   })
   let res = await axios.post('/auth/login', body, config)
-  if(res.data.msg){
-    alert(res.data.msg)
+  if(res.data.error){
+    return alert(res.data.error)
   }
   setUser({name: res.data.name, bal_amount: res.data.bal_amount, email: res.data.email})
 
@@ -48,7 +48,7 @@ const Login=({user,setUser})=>{
         alert("server error")
       }
     }
-  }
+  
   return (
     <>
     
