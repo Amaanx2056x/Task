@@ -8,8 +8,8 @@ const register=async (req,res)=>{
       return res.json({error: 'Name should be 3+ characters and Password should be 6+ characters long'})
     }
   try{
-    let user= await knex("Task").where({email: email})
-    if(user[0]){
+    let [user]= await knex("Task").where({email: email})
+    if(user){
       return res.json({error:"User with that email already exists"})
     }
     const salt = await bcrypt.genSalt(10)
@@ -30,17 +30,17 @@ const login=async (req,res)=>{
      return res.json({error: "Password should be 6+ characters long"})
     }
   try{
-    let user= await knex("Task").where({email: email})
-    if(!user[0]){
+    let [user]= await knex("Task").where({email: email})
+    if(!user){
       return res.json({error:"No User found with that email"})
     }
-    const isMatch = await bcrypt.compare(password, user[0].password)
+    const isMatch = await bcrypt.compare(password, user.password)
   if (!isMatch){
     return res.json({error:"Incorrect Password"})
   }
-  return res.json(user[0])
-
- 
+  let user_transactions= await knex("Transactions").where({user: email})
+  
+  return res.json({user,user_transactions})
   }
   catch(e){
     console.error(e)

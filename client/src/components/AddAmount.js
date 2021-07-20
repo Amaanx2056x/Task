@@ -32,7 +32,9 @@ const {addamount} = formData
   if(res.data.error){
     return alert(res.data.error)
   }
-  setUser({...user,bal_amount: res.data})
+  const userTransactions= []
+  res.data.user_transactions.forEach(tr=>userTransactions.push(tr.transaction))
+  setUser({...user,bal_amount: res.data.updated, transactions: userTransactions.reverse()})
   setData({addamount: 0})
 
       }

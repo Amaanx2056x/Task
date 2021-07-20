@@ -1,8 +1,10 @@
 import React,{useContext} from 'react'
-import {Link} from 'react-router-dom'
+import {Link,useHistory} from 'react-router-dom'
+
 import {UserContext} from '../App'
 const Navbar=()=>{
   const [user,setUser] =useContext(UserContext)
+  let history = useHistory();
   return (
     <>
     <nav className="navbar navbar-expand navbar-dark bg-dark">
@@ -14,15 +16,18 @@ const Navbar=()=>{
     {user.name !== null ? 
       <>
        <li className="nav-item">
-        <a className="nav-link" onClick={
+        <Link className="nav-link" onClick={
           ()=>{
             setUser({
-              name:null,
-              bal_amount: 0
+              name: null,
+              bal_amount: 0,
+              email: null,
+              transactions:[]
             })
+            history.push('/login') 
           }
           
-        }>Logout</a>
+        }>Logout</Link>
       </li>
       </>
       :

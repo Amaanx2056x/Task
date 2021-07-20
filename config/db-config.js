@@ -5,6 +5,9 @@ const knex = require('knex')({
     user : 'root',
     password : '',
     database : 'Test'
+  },
+  migrations:{
+    directory: __dirname + '/migrations'
   }
 });
 module.exports = knex

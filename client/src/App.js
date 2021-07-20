@@ -16,7 +16,8 @@ function App() {
   const [user, setUser] = useState({
     name:null,
     bal_amount: 0,
-    email: null
+    email: null,
+    transactions:[]
 })
   return (
     <UserContext.Provider value={[user,setUser]}>

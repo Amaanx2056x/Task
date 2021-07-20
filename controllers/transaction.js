@@ -12,9 +12,10 @@ const addAmount =async (req,res)=>{
    let new_amt= parseInt(user.bal_amount)+ parseInt(addamount)
    
    await knex("Task").where({email: email}).update({bal_amount: new_amt})
+   await knex("Transactions").insert({transaction: `Deposited ${addamount}`,user:email})
    let [updated]= await knex("Task").where({email: email})
-   
-   return res.json(updated.bal_amount)
+   let user_transactions= await knex("Transactions").where({user: email})
+   return res.json({updated: updated.bal_amount,user_transactions})
    }
    catch(err){
      console.error(err)
@@ -34,8 +35,10 @@ const removeAmount=async (req,res)=>{
     }
    let new_amt= parseInt(user.bal_amount)- parseInt(removeamount)
    await knex("Task").where({email: email}).update({bal_amount: new_amt})
-   let [updated]= await knex("Task").where({email: email})
-   return res.json(updated.bal_amount)
+   await knex("Transactions").insert({transaction: `Withdrawn ${removeamount}`,user:email})
+  let [updated]= await knex("Task").where({email: email})
+    let user_transactions= await knex("Transactions").where({user: email})
+   return res.json({updated: updated.bal_amount,user_transactions})
    }
    catch(err){
      console.error(err)
